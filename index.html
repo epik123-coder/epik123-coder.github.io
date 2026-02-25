@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jayden — CS Student</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #7fff6e;
+      --accent2: #6eb5ff;
+      --accent3: #ff6eb5;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(126,255,110,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(126,255,110,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 4rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    h1 span {
+      color: var(--accent);
+      display: block;
+    }
+
+    .avatar {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent2), var(--accent3));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--bg);
+      flex-shrink: 0;
+      box-shadow: 0 0 40px rgba(110,181,255,0.25);
+    }
+
+    /* Cards grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.6s ease both;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: radial-gradient(circle at 50% 0%, rgba(126,255,110,0.05), transparent 60%);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    .card:nth-child(4) { animation-delay: 0.4s; }
+
+    .card-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .card-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    /* Wide card */
+    .card-wide {
+      grid-column: span 2;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .tag {
+      background: rgba(126,255,110,0.08);
+      border: 1px solid rgba(126,255,110,0.2);
+      color: var(--accent);
+      font-size: 0.72rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+      transition: background 0.2s;
+    }
+
+    .tag:hover {
+      background: rgba(126,255,110,0.15);
+    }
+
+    .tag.blue {
+      background: rgba(110,181,255,0.08);
+      border-color: rgba(110,181,255,0.2);
+      color: var(--accent2);
+    }
+
+    .tag.blue:hover { background: rgba(110,181,255,0.15); }
+
+    /* Progress bar */
+    .progress-row {
+      display: flex; align-items: center; gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .progress-label { font-size: 0.75rem; color: var(--muted); min-width: 80px; }
+
+    .progress-bar {
+      flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      animation: growBar 1s ease both;
+      animation-delay: 0.8s;
+    }
+
+    @keyframes growBar {
+      from { width: 0 !important; }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding-top: 3rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      animation: fadeUp 0.6s 0.5s ease both;
+    }
+
+    footer span { color: var(--accent); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      .card-wide { grid-column: span 1; }
+      header { flex-direction: column-reverse; }
+      .avatar { width: 80px; height: 80px; font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div>
+        <div class="status-bar">
+          <div class="status-dot"></div>
+          Available for opportunities
+        </div>
+        <h1>Hey, I'm<span>Jayden.</span></h1>
+        <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted); max-width:360px; line-height:1.7;">
+          CS student. Code enthusiast. Gamer at heart. Building the skills to turn passion into craft.
+        </p>
+      </div>
+      <div class="avatar">J</div>
+    </header>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-label">Current Status</div>
+        <span class="card-icon">🎓</span>
+        <div class="card-title">Computer Science</div>
+        <div class="card-sub">2nd Semester · College Freshman</div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Passion</div>
+        <span class="card-icon">🎮</span>
+        <div class="card-title">Video Games</div>
+        <div class="card-sub">Player → Future Developer</div>
+      </div>
+
+      <div class="card card-wide">
+        <div class="card-label">Interests & Skills</div>
+        <div class="tag-list">
+          <span class="tag">Programming</span>
+          <span class="tag">Computer Science</span>
+          <span class="tag">Game Dev</span>
+          <span class="tag blue">Problem Solving</span>
+          <span class="tag blue">Algorithms</span>
+          <span class="tag blue">Software Engineering</span>
+        </div>
+      </div>
+
+      <div class="card card-wide">
+        <div class="card-label">Journey Progress</div>
+        <div class="progress-row">
+          <div class="progress-label">Semester</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+          <span style="font-size:0.7rem;color:var(--muted)">2 / 8</span>
+        </div>
+        <div class="progress-row">
+          <div class="progress-label">Programming</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+          <span style="font-size:0.7rem;color:var(--muted)">Growing</span>
+        </div>
+        <div class="progress-row">
+          <div class="progress-label">Gaming XP</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+          <span style="font-size:0.7rem;color:var(--muted)">High</span>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      Built with <span>♥</span> · Jayden · CS Major · Class of '27
+    </footer>
+
+  </div>
+</body>
+</html>
